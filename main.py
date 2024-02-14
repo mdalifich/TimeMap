@@ -1,8 +1,3 @@
-import requests
-import pygame
-from pygame import *
-from random import randint, randrange
-import os
 from maps import *
 
 
@@ -12,7 +7,8 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((width, heigth))
     running = True
     MMM = Map(0, 0, screen)
-    Type = True
+    Type = 0
+    var = ['map', 'sat', 'sat,skl']
     while running:
         screen.fill((130, 25, 75))
         for event in pygame.event.get():
@@ -26,11 +22,10 @@ if __name__ == '__main__':
             MMM.update(0, -1)
             print('Up')
         elif key[pygame.K_TAB]:
-            Type = not Type
-            if Type:
-                MMM.stile = 'map'
-            else:
-                MMM.stile = 'sat'
+            Type += 1
+            if Type > 2:
+                Type = 0
+            MMM.stile = var[Type]
             MMM.update(0, 0)
         elif key[pygame.K_DOWN]:
             MMM.update(0, 1)
