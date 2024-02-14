@@ -12,17 +12,26 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((width, heigth))
     running = True
     MMM = Map(0, 0, screen)
-
+    Type = True
     while running:
         screen.fill((130, 25, 75))
         for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
                 running = False
-
+            #if event.type == pygame.MOUSEBUTTONDOWN:
+             #   MMM.Point(pos[0], pos[1])
         key = pygame.key.get_pressed()
         if key[pygame.K_UP]:
             MMM.update(0, -1)
             print('Up')
+        elif key[pygame.K_TAB]:
+            Type = not Type
+            if Type:
+                MMM.stile = 'map'
+            else:
+                MMM.stile = 'sat'
+            MMM.update(0, 0)
         elif key[pygame.K_DOWN]:
             MMM.update(0, 1)
             print('Down')

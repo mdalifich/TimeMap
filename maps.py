@@ -16,6 +16,7 @@ class Map(pygame.sprite.Sprite):
         self.plusMetka = f'&pt=0%2C0'
         self.t = 'https://static-maps.yandex.ru/1.x/?'
         self.zoom = 4
+        self.stile = 'map'
         self.HTTPS = f"{self.t}ll={str(self.WorldX)}%2C-{str(self.WorldY)}&l=map&z=4"
         self.response = requests.get(self.HTTPS)
         self.image = pygame.image.load(BytesIO(self.response.content))
@@ -24,8 +25,7 @@ class Map(pygame.sprite.Sprite):
 
     def Point(self, x, y):
         self.plusMetka += f'~{x}%2C{y}'
-        self.HTTPS += self.plusMetka
-        self.image = pygame.image.load(BytesIO(self.response.content))
+        self.update(0, 0)
 
     def zooming(self, zoom):
         self.zoom = zoom
@@ -34,7 +34,7 @@ class Map(pygame.sprite.Sprite):
     def update(self, plusX, plusY):
         self.WorldX += plusX
         self.WorldY += plusY
-        self.HTTPS = self.t + f"ll={str(self.WorldX)}%2C-{str(self.WorldY)}&l=map&z={self.zoom}" + self.plusMetka
+        self.HTTPS = self.t + f"ll={str(self.WorldX)}%2C-{str(self.WorldY)}&l={self.stile}&z={self.zoom}" + self.plusMetka
         self.response = requests.get(self.HTTPS)
         self.image = pygame.image.load(BytesIO(self.response.content))
 
